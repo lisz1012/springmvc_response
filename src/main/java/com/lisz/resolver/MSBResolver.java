@@ -1,5 +1,6 @@
 package com.lisz.resolver;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -7,9 +8,18 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Locale;
 
+//@Component
 public class MSBResolver extends InternalResourceViewResolver {
 	private static final String MSB_REDIRECT_URL_PREFIX = "msb:";
 
+	/**
+	 重写方法public View resolveViewName(String viewName, Locale locale) throws Exception也是可以的，因为曾祖父类
+	 AbstractCachingViewResolver重写了resolveViewName方法，里面有这么一句：
+	 if (!isCache()) {
+	  return createView(viewName, locale);
+	 }
+	 相当于每次都不看cache直接调用createView
+	 */
 	@Override
 	protected View createView(String viewName, Locale locale) throws Exception {
 		// If this resolver is not supposed to handle the given view,

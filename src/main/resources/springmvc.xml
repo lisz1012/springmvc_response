@@ -9,13 +9,34 @@
      但是DispatcherServlet中没有对应静态资源的逻辑，所以访问不到，添加默认之后就可以了，但是会发现此时动态请求无法完成，所以还要添加
      <mvc:annotation-driven></mvc:annotation-driven>标签来使用  <mvc:annotation-driven /> 这种写法有时候会出问题，不建议-->
     <mvc:default-servlet-handler />
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="conversionService" />
 <!-- 默认就是这个ViewResolver，只是没设置参数 -->
-<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-<!--        <property name="prefix" value="/WEB-INF/page/" />-->
-<!--        <property name="suffix" value=".jsp" />-->
-<!--    </bean>-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/page/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
     <!-- 添加自定义解析器 -->
 <!--    <bean class="com.lisz.resolver.MyJspResolver" />-->
-    <bean class="com.lisz.resolver.MSBResolver" />
+    <!-- 自定义类上面加了@Component 下面这个bean的声明就省略了，还有一个好处是：注解标识的Component会优先于xml中配置的bean执行 -->
+    <bean class="com.lisz.resolver.MyViewResolver">
+        <property name="order" value="1" />
+    </bean>
+
+    <!-- 也可以在类型转换器上面加@Component -->
+    <bean id="myConverter" class="com.lisz.converter.MyConverter" />
+    <!-- 添加自定义的类型转换器到ConversionServiceFactoryBean中, id必须有，且要设置为"conversionService" -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="myConverter" />
+            </set>
+        </property>
+    </bean>
+<!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+<!--        <property name="converters">-->
+<!--            <set>-->
+<!--                <ref bean="myConverter" />-->
+<!--            </set>-->
+<!--        </property>-->
+<!--    </bean>-->
 </beans>

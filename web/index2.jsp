@@ -17,8 +17,12 @@
   666<br>
   <img src="${ctp}/img/6acd-itriats6151651.jpg"><br>
   请按照id-name-age-gender的方式输入数据
-  <form action="${ctp}/convert" method="post">
-    <input type="text" name="user"><br>
+  <form action="${ctp}/testDateConverter" method="post">
+    id: <input type="text" name="id"><br>
+    name: <input type="text" name="name"><br>
+    age: <input type="text" name="age"><br>
+    password: <input type="password" name="password"><br>
+    birth: <input type="text" name="birth"><br>
     <input type="submit" value="提交">
   </form>
   </body>

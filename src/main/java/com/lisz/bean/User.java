@@ -1,10 +1,25 @@
 package com.lisz.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class User {
 	private Integer id;
 	private String name;
 	private String password;
 	private Integer age;
+	private String gender;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birth;
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	public Integer getId() {
 		return id;
@@ -38,6 +53,14 @@ public class User {
 		this.age = age;
 	}
 
+	public Date getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +
@@ -45,6 +68,8 @@ public class User {
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
 				", age=" + age +
+				", gender='" + gender + '\'' +
+				", birth=" + birth +
 				'}';
 	}
 }
